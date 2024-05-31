@@ -5,6 +5,6 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/.apt_generated"/>
         <property name="java-output-path" value="/pict_admin/target/classes"/>
-        <property name="context-root" value="hwacheon_golf"/>
+        <property name="context-root" value="pict_admin"/>
     </wb-module>
 </project-modules>
