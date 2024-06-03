@@ -64,163 +64,31 @@ public class PictServiceImpl extends EgovAbstractServiceImpl implements PictServ
 	@Resource(name = "egovIdGnrService")
 	private EgovIdGnrService egovIdGnrService;
 
-
 	@Override
-	public List<PictVO> api_get_badge(PictVO pictVO) throws Exception {
-		return pictMapper.api_get_badge(pictVO);
-	}
-
-	@Override
-	public List<PictVO> api_get_coin(PictVO pictVO) throws Exception {
-		return pictMapper.api_get_coin(pictVO);
-	}
-
-	@Override
-	public PictVO api_get_avata(PictVO pictVO) throws Exception {
-		return pictMapper.api_get_avata(pictVO);
-	}
-
-	@Override
-	public void insert_avata(PictVO pictVO) throws Exception {
-		pictMapper.insert_avata(pictVO);
+	public List<?> notice_list(PictVO pictVO) throws Exception {
+		// TODO Auto-generated method stub
+		return pictMapper.notice_list(pictVO);
 		
 	}
 
 	@Override
-	public void update_avata(PictVO pictVO) throws Exception {
-		pictMapper.update_avata(pictVO);
-		
+	public Integer notice_list_cnt(PictVO pictVO) throws Exception {
+		// TODO Auto-generated method stub
+		return pictMapper.notice_list_cnt(pictVO);
 	}
 
 	@Override
-	public List<?> lecture_list(PictVO pictVO) throws Exception {
-		return pictMapper.lecture_list(pictVO);
+	public PictVO notice_list_one(PictVO pictVO) throws Exception {
+		// TODO Auto-generated method stub
+		return pictMapper.notice_list_one(pictVO);
 	}
 
 	@Override
-	public PictVO lecture_select_one(PictVO pictVO) throws Exception {
-		return pictMapper.lecture_select_one(pictVO);
+	public void notice_rdcnt(PictVO pictVO) throws Exception {
+		// TODO Auto-generated method stub
+		pictMapper.notice_rdcnt(pictVO);
 	}
 
-	@Override
-	public void lecture_update(PictVO pictVO) throws Exception {
-		pictMapper.lecture_update(pictVO);
-		
-	}
-
-	@Override
-	public void lecture_insert(PictVO pictVO) throws Exception {
-		pictMapper.lecture_insert(pictVO);
-		
-	}
-
-	@Override
-	public List<?> lecture_attendance(PictVO pictVO) throws Exception {
-		return pictMapper.lecture_attendance(pictVO);
-	}
-	
-	@Override
-	public void attendance_save(PictVO pictVO) throws Exception {
-		pictMapper.attendance_save(pictVO);
-	}
-
-	@Override
-	public PictVO select_attendance(PictVO pictVO) throws Exception {
-		return pictMapper.select_attendance(pictVO);
-	}
-
-	@Override
-	public List<PictVO> api_lecture_list(PictVO pictVO) throws Exception {
-		return pictMapper.api_lecture_list(pictVO);
-	}
-
-	@Override
-	public List<?> lecture_category_list(PictVO pictVO) throws Exception {
-		return pictMapper.lecture_category_list(pictVO);
-	}
-
-	@Override
-	public PictVO lecture_cate_select_one(PictVO pictVO) throws Exception {
-		return pictMapper.lecture_cate_select_one(pictVO);
-	}
-
-	@Override
-	public void lecture_cate_update(PictVO pictVO) throws Exception {
-		pictMapper.lecture_cate_update(pictVO);
-		
-	}
-
-	@Override
-	public void lecture_cate_insert(PictVO pictVO) throws Exception {
-		pictMapper.lecture_cate_insert(pictVO);
-		
-	}
-
-	@Override
-	public List<?> connection_user(PictVO pictVO) throws Exception {
-		return pictMapper.connection_user(pictVO);
-	}
-
-	@Override
-	public PictVO attendance_select_one(PictVO pictVO) throws Exception {
-		return pictMapper.attendance_select_one(pictVO);
-	}
-
-	@Override
-	public void attendance_save_update(PictVO vo) throws Exception {
-		pictMapper.attendance_save_update(vo);
-		
-	}
-
-	@Override
-	public void connection_user_del(PictVO pictVO) throws Exception {
-		pictMapper.connection_user_del(pictVO);
-		
-	}
-
-	@Override
-	public List<?> board_list(PictVO pictVO) throws Exception {
-		return pictMapper.board_list(pictVO);
-	}
-
-	@Override
-	public PictVO board_list_one(PictVO pictVO) throws Exception {
-		return pictMapper.board_list_one(pictVO);
-	}
-
-	@Override
-	public void board_update(PictVO pictVO) throws Exception {
-		pictMapper.board_update(pictVO);
-		
-	}
-
-	@Override
-	public void board_insert(PictVO pictVO) throws Exception {
-		pictMapper.board_insert(pictVO);
-		
-	}
-
-	@Override
-	public List<?> lecture_userinfo_list(PictVO pictVO) throws Exception {
-		return pictMapper.lecture_userinfo_list(pictVO);
-	}
-
-	@Override
-	public List<PictVO> lecture_attendance_api(PictVO pictVO) throws Exception {
-		return pictMapper.lecture_attendance_api(pictVO);
-	}
-
-	@Override
-	public void board_delete(PictVO pictVO) throws Exception {
-		pictMapper.board_delete(pictVO);
-		
-	}
-
-//	@Override
-//	public void attendance_update(PictVO pictVO) throws Exception {
-//		pictMapper.attendance_update(pictVO);
-//		
-//	}
 
 
 	

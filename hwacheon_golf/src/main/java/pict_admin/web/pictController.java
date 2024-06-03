@@ -15,6 +15,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.mail.PasswordAuthentication;
@@ -32,6 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pict_admin.service.AdminService;
 import pict_admin.service.AdminVO;
+import pict_admin.service.MemberVO;
 import pict_admin.service.PictService;
 import pict_admin.service.PictVO;
 
@@ -112,32 +114,176 @@ public class pictController {
 	
 	//공지사항
 	@RequestMapping(value = "/bbs/notice.do")
-	public String notice(@ModelAttribute("searchVO") AdminVO adminVO, HttpServletRequest request, ModelMap model, HttpSession session, RedirectAttributes rttr) throws Exception {
+	public String notice(@ModelAttribute("searchVO") PictVO pictVO, HttpServletRequest request, ModelMap model, HttpSession session, RedirectAttributes rttr) throws Exception {
+		pictVO.setBbsId("BBSMSTR_000000000001");
+		
+		int limitNumber = 10;
+		pictVO.setLimit(limitNumber);
+		
+		Integer pageNum = pictVO.getPageNumber();
+		
+		if(pageNum == 0) {
+			pictVO.setPageNumber(1);
+			pageNum = 1;
+		}
 
+		int startNum = (pageNum - 1) * limitNumber;
+		pictVO.setStartNumber(startNum);
+		
+		Integer totalCnt = pictService.notice_list_cnt(pictVO);
+		
+		int lastPageValue = (int)(Math.ceil( totalCnt * 1.0 / 10 )); 
+		pictVO.setLastPage(lastPageValue);
+		
+		Integer s_page = pageNum - 4;
+		Integer e_page = pageNum + 5;
+		if (s_page <= 0) {
+			s_page = 1;
+			e_page = 10;
+		} 
+		if (e_page > lastPageValue){
+			e_page = lastPageValue;
+		}
+		
+		pictVO.setStartPage(s_page);
+		pictVO.setEndPage(e_page);
+		
+		
+		List<?> notice_list = pictService.notice_list(pictVO);
+		
+	
+		model.addAttribute("notice_list", notice_list);
+		model.addAttribute("totalCnt", totalCnt);
+		
+		
+		model.addAttribute("pictVO", pictVO);
 		return "pict/bbs/notice";
 	}
 	//공지사항 뷰
 	@RequestMapping(value = "/bbs/notice_view.do")
-	public String notice_view(@ModelAttribute("searchVO") AdminVO adminVO, HttpServletRequest request, ModelMap model, HttpSession session, RedirectAttributes rttr) throws Exception {
-
+	public String notice_view(@ModelAttribute("searchVO") PictVO pictVO, HttpServletRequest request, ModelMap model, HttpSession session, RedirectAttributes rttr) throws Exception {
+		String nttId = pictVO.getNttId();
+		
+		pictService.notice_rdcnt(pictVO);
+		
+		pictVO.setNttId(nttId);
+		pictVO.setBbsId("BBSMSTR_000000000001");
+		pictVO = pictService.notice_list_one(pictVO);
+		model.addAttribute("pictVO", pictVO);
+		
 		return "pict/bbs/notice_view";
 	}
 	//갤러리
 	@RequestMapping(value = "/bbs/gallery.do")
-	public String gallery(@ModelAttribute("searchVO") AdminVO adminVO, HttpServletRequest request, ModelMap model, HttpSession session, RedirectAttributes rttr) throws Exception {
+	public String gallery(@ModelAttribute("searchVO") PictVO pictVO, HttpServletRequest request, ModelMap model, HttpSession session, RedirectAttributes rttr) throws Exception {
+		pictVO.setBbsId("BBSMSTR_000000000011");
+		
+		int limitNumber = 10;
+		pictVO.setLimit(limitNumber);
+		
+		Integer pageNum = pictVO.getPageNumber();
+		
+		if(pageNum == 0) {
+			pictVO.setPageNumber(1);
+			pageNum = 1;
+		}
+
+		int startNum = (pageNum - 1) * limitNumber;
+		pictVO.setStartNumber(startNum);
+		
+		Integer totalCnt = pictService.notice_list_cnt(pictVO);
+		
+		int lastPageValue = (int)(Math.ceil( totalCnt * 1.0 / 10 )); 
+		pictVO.setLastPage(lastPageValue);
+		
+		Integer s_page = pageNum - 4;
+		Integer e_page = pageNum + 5;
+		if (s_page <= 0) {
+			s_page = 1;
+			e_page = 10;
+		} 
+		if (e_page > lastPageValue){
+			e_page = lastPageValue;
+		}
+		
+		pictVO.setStartPage(s_page);
+		pictVO.setEndPage(e_page);
+		
+		
+		List<?> gallery_list = pictService.notice_list(pictVO);
+		
+	
+		model.addAttribute("gallery_list", gallery_list);
+		model.addAttribute("totalCnt", totalCnt);
+		
+		
+		model.addAttribute("pictVO", pictVO);
 
 		return "pict/bbs/gallery";
 	}
 	//갤러리 뷰
 	@RequestMapping(value = "/bbs/gallery_view.do")
-	public String gallery_view(@ModelAttribute("searchVO") AdminVO adminVO, HttpServletRequest request, ModelMap model, HttpSession session, RedirectAttributes rttr) throws Exception {
-
+	public String gallery_view(@ModelAttribute("searchVO") PictVO pictVO, HttpServletRequest request, ModelMap model, HttpSession session, RedirectAttributes rttr) throws Exception {
+		String nttId = pictVO.getNttId();
+		
+		pictService.notice_rdcnt(pictVO);
+		
+		pictVO.setNttId(nttId);
+		pictVO.setBbsId("BBSMSTR_000000000011");
+		pictVO = pictService.notice_list_one(pictVO);
+		model.addAttribute("pictVO", pictVO);
 		return "pict/bbs/gallery_view";
 	}
 	//문의하기
 	@RequestMapping(value = "/bbs/inquiry.do")
-	public String inquiry(@ModelAttribute("searchVO") AdminVO adminVO, HttpServletRequest request, ModelMap model, HttpSession session, RedirectAttributes rttr) throws Exception {
+	public String inquiry(@ModelAttribute("searchVO") MemberVO memberVO, HttpServletRequest request, ModelMap model, HttpSession session, RedirectAttributes rttr) throws Exception {
+		memberVO = (MemberVO) request.getSession().getAttribute("loginVO");
+		System.out.println(memberVO.getMemberId() + "이게 아이디~~~~~~~");
+		
+		PictVO pictVO = new PictVO();
+		
+		pictVO.setBbsId("BBSMSTR_000000000021");
+		
+		int limitNumber = 10;
+		pictVO.setLimit(limitNumber);
+		
+		Integer pageNum = pictVO.getPageNumber();
+		
+		if(pageNum == 0) {
+			pictVO.setPageNumber(1);
+			pageNum = 1;
+		}
 
+		int startNum = (pageNum - 1) * limitNumber;
+		pictVO.setStartNumber(startNum);
+		
+		Integer totalCnt = pictService.notice_list_cnt(pictVO);
+		
+		int lastPageValue = (int)(Math.ceil( totalCnt * 1.0 / 10 )); 
+		pictVO.setLastPage(lastPageValue);
+		
+		Integer s_page = pageNum - 4;
+		Integer e_page = pageNum + 5;
+		if (s_page <= 0) {
+			s_page = 1;
+			e_page = 10;
+		} 
+		if (e_page > lastPageValue){
+			e_page = lastPageValue;
+		}
+		
+		pictVO.setStartPage(s_page);
+		pictVO.setEndPage(e_page);
+		
+		
+		List<?> inquiry_list = pictService.notice_list(pictVO);
+		
+	
+		model.addAttribute("inquiry_list", inquiry_list);
+		model.addAttribute("totalCnt", totalCnt);
+		
+		
+		model.addAttribute("pictVO", pictVO);
 		return "pict/bbs/inquiry";
 	}
 	//문의하기 뷰
@@ -272,8 +418,8 @@ public class pictController {
 		pr.close();
 	}
 	@RequestMapping("/login_action.do")
-	public String login(PictVO pictVO, HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception{
-		PictVO user = (PictVO) request.getSession().getAttribute("loginVO");
+	public String login(MemberVO pictVO, HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception{
+		MemberVO user = (MemberVO) request.getSession().getAttribute("loginVO");
 		/*
 		if(user == null) {
 			PictVO loginCheck = pictService.selectMemberloginCheck(pictVO);
@@ -313,8 +459,8 @@ public class pictController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/logout.do")
-	public String logout(PictVO pictVO, HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception{
-		PictVO user = (PictVO) request.getSession().getAttribute("loginVO");
+	public String logout(MemberVO memberVO, HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception{
+		MemberVO user = (MemberVO) request.getSession().getAttribute("loginVO");
 
 		if(user == null) {
 			model.addAttribute("message", "로그인이 필요한 서비스입니다.");
@@ -328,7 +474,7 @@ public class pictController {
 		model.addAttribute("retType", ":null_submit");
 		model.addAttribute("retUrl", "/");
 
-		return "/common/message";
+		return "pict/common/message";
 	}
 
 	/**
@@ -341,14 +487,14 @@ public class pictController {
 	@RequestMapping(value = "/kakaoLoginAction.do")
 	public String kakaoLoginAction(HttpServletRequest request, ModelMap model) throws Exception {
 
-		PictVO user = (PictVO) request.getSession().getAttribute("loginVO");
+		MemberVO user = (MemberVO) request.getSession().getAttribute("loginVO");
     	System.out.println("::::::::::::::::::카카오 로그인 시작");
 
 		if (user == null) {
 			String kakaoId = request.getParameter("kakaoId")==null?"":request.getParameter("kakaoId");
 			/*String kakaoName = request.getParameter("kakaoName")==null?"":request.getParameter("kakaoName");*/
 			
-			PictVO login = new PictVO();
+			MemberVO login = new MemberVO();
 			
 			if(!kakaoId.equals("")){
 				login.setMemberId("k"+kakaoId);
@@ -357,7 +503,7 @@ public class pictController {
 				model.addAttribute("retUrl", "/login");
 				model.addAttribute("message", "카카오 로그인시 오류가 발생하였습니다. 다시 시도해주시기 바랍니다.");
 				
-				return "/common/message";
+				return "pict/common/message";
 			}
 			
 			/*if(!kakaoName.equals("")){
@@ -397,7 +543,7 @@ public class pictController {
 	    	System.out.println("::::::::::::::::::카카오 로그인 종료");
 			request.getSession().removeAttribute("returnUrl");
 			
-			return "/common/message";
+			return "pict/common/message";
 		} else {
 			return "redirect:/";
 		}
@@ -413,7 +559,7 @@ public class pictController {
 	@RequestMapping(value = "/naverLoginAction.do")
 	public String naverLoginAction(HttpServletRequest request, ModelMap model) throws Exception {
 
-		PictVO user = (PictVO) request.getSession().getAttribute("MemberVO");
+		MemberVO user = (MemberVO) request.getSession().getAttribute("MemberVO");
     	System.out.println("::::::::::::::::::네이버 로그인 시작");
 
 		if (user == null) {
@@ -518,7 +664,7 @@ public class pictController {
 		      	  	jo2 = new JSONObject(msg2);
 		      	  	jo3 = new JSONObject(jo2.get("response").toString());
 		      	  	
-		      	  	PictVO login = new PictVO();
+		      	  MemberVO login = new MemberVO();
 		      	  	login.setMemberId("n"+jo3.get("id").toString());
 
 		      	  	// 로그인 정보를 세션에 저장

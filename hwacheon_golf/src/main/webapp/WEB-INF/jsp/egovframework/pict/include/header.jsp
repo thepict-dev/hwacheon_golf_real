@@ -3,15 +3,33 @@
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="pict_admin.web.SessionBundle"%>		
 <div class="wrapper">
 	<header class="header">
 		<div class="header-util">
 			<ul>
-				<li><a href="https://www.ihc.go.kr/www/index.do" title="새창열림" target="_blank">화천군청</a></li>
+				<li>
+					<a href="https://www.ihc.go.kr/www/index.do" title="새창열림" target="_blank">화천군청</a>
+				</li>
+				<%												
+					SessionBundle sb = new SessionBundle(request);
 				
-					<li class="login"><a href="/_member/logout.do">로그아웃</a></li>
+					if(sb.getMemberId() == null){
+				%>
+					<li class="login"><a href="/login.do">로그인</a></li>
+					
+				<%
+					}
+					else{
+				%>	
+					<li class="login"><a href="/logout.do">로그아웃</a></li>
+				<%
+					}
+				%>
+					
 				
-					<li class="login"><a href="/login">로그인</a></li>
+					
 				
 			</ul>
 		</div>
@@ -42,8 +60,8 @@
 							<a href="#lnk">예약안내</a>
 							<div class="dep2">
 								<ul>
-									<li><a href="/parkgolf/reservation.do">예약하기</a></li>
-									<li><a href="/parkgolf/confirm.do">예약확인</a></li>
+									<li><a href="/reservation/reservation.do">예약하기</a></li>
+									<li><a href="/reservation/confirm.do">예약확인</a></li>
 								</ul>
 							</div>
 						</li>

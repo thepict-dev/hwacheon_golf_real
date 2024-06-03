@@ -3,7 +3,11 @@
 <%@ page import="java.security.SecureRandom" %>
 <%@ page import="java.math.BigInteger" %>
 
-
+<%@include file="../include/head.jsp" %>
+<%@include file="../include/header.jsp" %> 
+<div class="sub-container">
+	<div class="sub-visual"><h2>인사말</h2></div>
+	<%@include file="../include/breadcrumb.jsp" %>
 
         <div class="calendar-wrap">
             <div class="box-wrap login bg-none" data-aos="fade-up" data-delay="2000" data-aos-duration="1500">
@@ -11,11 +15,11 @@
                 <div class="btn-wrap noto">
 				<%
 					//개발서버
-					//String clientId = "SpTYYF4tvPMxqsSVslso";
-					//String redirectURI = URLEncoder.encode("http://localhost:8080/_member/naverLoginAction.do", "UTF-8");
+					String clientId = "SpTYYF4tvPMxqsSVslso";
+					String redirectURI = URLEncoder.encode("http://localhost:8080/naverLoginAction.do", "UTF-8");
 					//운영서버
-					String clientId = "1_KsnaDm7xhxlqYb76PV";
-					String redirectURI = URLEncoder.encode("https://hspg.ihc.go.kr/_member/naverLoginAction.do", "UTF-8");
+					//String clientId = "1_KsnaDm7xhxlqYb76PV";
+					//String redirectURI = URLEncoder.encode("https://hspg.ihc.go.kr/_member/naverLoginAction.do", "UTF-8");
 					
 					SecureRandom random = new SecureRandom();
 					String state = new BigInteger(130, random).toString();
@@ -37,13 +41,15 @@
             </div>
           </div>
       </div>
+	</div>
+</div>
 
 		<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 		<script type="text/javascript">
 			// 개발
-			//Kakao.init('13ffd9b7d5d69901fb96703577c15ad3'); //여기서 아까 발급받은 키 중 javascript키를 사용해준다.
+			Kakao.init('13ffd9b7d5d69901fb96703577c15ad3'); //여기서 아까 발급받은 키 중 javascript키를 사용해준다.
 			// 운영
-			Kakao.init('6f8098b0177751d61041ee041a87403e');
+			//Kakao.init('6f8098b0177751d61041ee041a87403e');
 			
 			Kakao.Auth.createLoginButton({ 
 				container: '#kakao-login-btn', 
@@ -61,6 +67,6 @@
 				} 
 			});
 		</script>
-		<form action="/_member/kakaoLoginAction.do" name="kakaoFrm" id="kakaoFrm" method="post">
+		<form action="/kakaoLoginAction.do" name="kakaoFrm" id="kakaoFrm" method="post">
 			<input type="hidden" name="kakaoId" id="kakaoId" value="">                           	
 		</form>

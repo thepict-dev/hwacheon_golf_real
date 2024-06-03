@@ -35,63 +35,13 @@ import java.util.List;
  *  Copyright (C) by MOPAS All right reserved.
  */
 public interface PictService {
-	List<PictVO> api_get_badge(PictVO pictVO) throws Exception;
+	List<?> notice_list(PictVO pictVO) throws Exception;
 
-	List<PictVO> api_get_coin(PictVO pictVO) throws Exception;
+	Integer notice_list_cnt(PictVO pictVO) throws Exception;
 
-	PictVO api_get_avata(PictVO pictVO) throws Exception;
+	PictVO notice_list_one(PictVO pictVO) throws Exception;
 
-	void insert_avata(PictVO pictVO) throws Exception;
-
-	void update_avata(PictVO pictVO) throws Exception;
-
-	List<?> lecture_list(PictVO pictVO) throws Exception;
-
-	PictVO lecture_select_one(PictVO pictVO) throws Exception;
-
-	void lecture_update(PictVO pictVO) throws Exception;
-	
-	void lecture_insert(PictVO pictVO) throws Exception;
-
-	List<?> lecture_attendance(PictVO pictVO) throws Exception;
-
-	void attendance_save(PictVO pictVO) throws Exception;
-
-	PictVO select_attendance(PictVO pictVO) throws Exception;
-
-	List<PictVO> api_lecture_list(PictVO pictVO) throws Exception;
-
-	List<?> lecture_category_list(PictVO pictVO) throws Exception;
-
-	PictVO lecture_cate_select_one(PictVO pictVO) throws Exception;
-
-	void lecture_cate_update(PictVO pictVO) throws Exception;
-
-	void lecture_cate_insert(PictVO pictVO) throws Exception;
-
-	List<?> connection_user(PictVO pictVO) throws Exception;
-
-	PictVO attendance_select_one(PictVO pictVO) throws Exception;
-
-	void attendance_save_update(PictVO vo) throws Exception;
-
-	void connection_user_del(PictVO pictVO) throws Exception;
-
-	List<?> board_list(PictVO pictVO) throws Exception;
-
-	PictVO board_list_one(PictVO pictVO) throws Exception;
-
-	void board_update(PictVO pictVO) throws Exception;
-
-	void board_insert(PictVO pictVO) throws Exception;
-
-	List<?> lecture_userinfo_list(PictVO pictVO) throws Exception;
-
-	List<PictVO> lecture_attendance_api(PictVO pictVO) throws Exception;
-
-	void board_delete(PictVO pictVO) throws Exception;
-
-	//void attendance_update(PictVO pictVO) throws Exception;
+	void notice_rdcnt(PictVO pictVO) throws Exception;
 
 
 }

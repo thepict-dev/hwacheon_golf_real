@@ -7,6 +7,8 @@
 </footer>
 
 </div>
+<!-- 
 <c:import url="../include/weather_api.jsp">
 
 </c:import>
+ -->

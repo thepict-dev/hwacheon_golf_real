@@ -139,7 +139,190 @@ public class PictVO extends PictDefaultVO {
 	private String memberCnt;		// 해당 소속 회원 cnt
 	private String returnUrl;
 	
+	/*페이징*/
+	private int pageNumber;
+	private int startNumber;
+	private int limit;
+	private int totalPage;
+	private int offset;
+	private int lastPage;
+	private int startPage;
+	private int endPage;
 	
+	
+	
+	/*게시판*/
+	private String nttId;
+	private String bbsId;
+	private String nttSj;
+	private String nttCn;
+	private String rdcnt;
+	private String useAt;
+	private String answerAt;
+	private String answerLc;
+	private String ntcrId;
+	private String ntcrNm;
+	private String frstRegistPnttm;
+	private String noticeAt;
+	private String atchFileId;
+	private String replyAt;
+	private String replyLc;
+	private String searchCnd;
+	private String searchWrd;
+	
+	
+	
+	
+	public String getSearchCnd() {
+		return searchCnd;
+	}
+	public void setSearchCnd(String searchCnd) {
+		this.searchCnd = searchCnd;
+	}
+	public String getSearchWrd() {
+		return searchWrd;
+	}
+	public void setSearchWrd(String searchWrd) {
+		this.searchWrd = searchWrd;
+	}
+	public String getReplyAt() {
+		return replyAt;
+	}
+	public void setReplyAt(String replyAt) {
+		this.replyAt = replyAt;
+	}
+	public String getReplyLc() {
+		return replyLc;
+	}
+	public void setReplyLc(String replyLc) {
+		this.replyLc = replyLc;
+	}
+	public String getAtchFileId() {
+		return atchFileId;
+	}
+	public void setAtchFileId(String atchFileId) {
+		this.atchFileId = atchFileId;
+	}
+	public String getNoticeAt() {
+		return noticeAt;
+	}
+	public void setNoticeAt(String noticeAt) {
+		this.noticeAt = noticeAt;
+	}
+	public String getNttId() {
+		return nttId;
+	}
+	public void setNttId(String nttId) {
+		this.nttId = nttId;
+	}
+	public String getBbsId() {
+		return bbsId;
+	}
+	public void setBbsId(String bbsId) {
+		this.bbsId = bbsId;
+	}
+	public String getNttSj() {
+		return nttSj;
+	}
+	public void setNttSj(String nttSj) {
+		this.nttSj = nttSj;
+	}
+	public String getNttCn() {
+		return nttCn;
+	}
+	public void setNttCn(String nttCn) {
+		this.nttCn = nttCn;
+	}
+	public String getRdcnt() {
+		return rdcnt;
+	}
+	public void setRdcnt(String rdcnt) {
+		this.rdcnt = rdcnt;
+	}
+	public String getUseAt() {
+		return useAt;
+	}
+	public void setUseAt(String useAt) {
+		this.useAt = useAt;
+	}
+	public String getAnswerAt() {
+		return answerAt;
+	}
+	public void setAnswerAt(String answerAt) {
+		this.answerAt = answerAt;
+	}
+	public String getAnswerLc() {
+		return answerLc;
+	}
+	public void setAnswerLc(String answerLc) {
+		this.answerLc = answerLc;
+	}
+	public String getNtcrId() {
+		return ntcrId;
+	}
+	public void setNtcrId(String ntcrId) {
+		this.ntcrId = ntcrId;
+	}
+	public String getNtcrNm() {
+		return ntcrNm;
+	}
+	public void setNtcrNm(String ntcrNm) {
+		this.ntcrNm = ntcrNm;
+	}
+	public String getFrstRegistPnttm() {
+		return frstRegistPnttm;
+	}
+	public void setFrstRegistPnttm(String frstRegistPnttm) {
+		this.frstRegistPnttm = frstRegistPnttm;
+	}
+	public int getPageNumber() {
+		return pageNumber;
+	}
+	public void setPageNumber(int pageNumber) {
+		this.pageNumber = pageNumber;
+	}
+	public int getStartNumber() {
+		return startNumber;
+	}
+	public void setStartNumber(int startNumber) {
+		this.startNumber = startNumber;
+	}
+	public int getLimit() {
+		return limit;
+	}
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+	public int getTotalPage() {
+		return totalPage;
+	}
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+	}
+	public int getOffset() {
+		return offset;
+	}
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+	public int getLastPage() {
+		return lastPage;
+	}
+	public void setLastPage(int lastPage) {
+		this.lastPage = lastPage;
+	}
+	public int getStartPage() {
+		return startPage;
+	}
+	public void setStartPage(int startPage) {
+		this.startPage = startPage;
+	}
+	public int getEndPage() {
+		return endPage;
+	}
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
+	}
 	public String getReturnUrl() {
 		return returnUrl;
 	}

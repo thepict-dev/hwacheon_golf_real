@@ -7,6 +7,7 @@
 		<typeAlias alias="searchVO" type="egovframework.example.sample.service.SampleDefaultVO"/>
 		<typeAlias alias="sampleVO" type="egovframework.example.sample.service.SampleVO"/>
 		<typeAlias alias="pictVO" type="pict_admin.service.PictVO"/>
+		<typeAlias alias="memberVO" type="pict_admin.service.MemberVO"/>
 		<typeAlias alias="pictsearchVO" type="pict_admin.service.PictDefaultVO"/>
 		<typeAlias alias="adminVO" type="pict_admin.service.AdminVO"/>
     </typeAliases>

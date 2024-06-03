@@ -1,232 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pict_admin.service.impl.PictMapper">
-
- 	<resultMap id="lecture_list" type="pict_admin.service.PictVO">
-		<result property="idx" column="idx"/>
-		<result property="title" column="title"/>
-		<result property="name" column="name"/>
-		<result property="link_url" column="link_url"/>
-		<result property="reg_date" column="reg_date"/>
-		<result property="use_at" column="use_at"/>
-		
-		<result property="category" column="category"/>
-		<result property="category_id" column="category_id"/>
-		<result property="category_cnt" column="category_cnt"/>
-		<result property="week" column="week"/>
-		<result property="campus" column="campus"/>
-		<result property="campus_id" column="campus_id"/>
-		
+	<resultMap id="boardDetail" type="pict_admin.service.PictVO">
+		<result property="bbsId" column="BBS_ID"/>
+		<result property="nttId" column="NTT_ID"/>
+		<result property="nttSj" column="NTT_SJ"/>	
+		<result property="ntcrId" column="NTCR_ID"/>
+		<result property="ntcrNm" column="NTCR_NM"/>
+		<result property="nttCn" column="NTT_CN"/>
+		<result property="frstRegistPnttm" column="FRST_REGIST_PNTTM"/>
+		<result property="rdcnt" column="RDCNT"/>
+		<result property="useAt" column="USE_AT"/>
+		<result property="atchFileId" column="ATCH_FILE_ID"/>
+		<result property="replyAt" column="ANSWER_AT"/>		
+		<result property="replyLc" column="ANSWER_LC"/>
+		<result property="noticeAt" column="NOTICE_AT"/>
 	</resultMap>
 	
-	
-	<resultMap id="lecture_attendance" type="pict_admin.service.PictVO">
-		<result property="idx" column="idx"/>
-		<result property="title" column="title"/>
-		<result property="lecture_id" column="lecture_id"/>
-		<result property="professor" column="professor"/>
-		<result property="name" column="name"/>
-		<result property="reg_date" column="reg_date"/>
-		<result property="in_date" column="in_date"/>
-		<result property="out_date" column="out_date"/>
-		<result property="timediff" column="timediff"/>
-		<result property="category_cnt" column="category_cnt"/>
-		<result property="whole_timediff" column="whole_timediff"/>
+	<select id="notice_list" resultMap="boardDetail">
+		select NTT_ID, BBS_ID, NTT_SJ, NTT_CN, RDCNT, USE_AT, ANSWER_AT, ANSWER_LC,NTCR_ID, NTCR_NM, FRST_REGIST_PNTTM, ATCH_FILE_ID, NOTICE_AT
+		from comtnbbs
 		
-	</resultMap>
-	
-	<resultMap id="lecture_category_list" type="pict_admin.service.PictVO">
-		<result property="idx" column="idx"/>
-		<result property="category" column="category"/>
-		<result property="use_at" column="use_at"/>
-		<result property="name" column="name"/>
-		<result property="campus" column="campus"/>
-		<result property="professor_id" column="professor_id"/>
+		where BBS_ID = #{bbsId}
+		and USE_AT = 'Y'
 		
-	</resultMap>
-	
-	<resultMap id="connection_user" type="pict_admin.service.PictVO">
-		<result property="id" column="id"/>
-		<result property="nick_name" column="nick_name"/>
-		<result property="mobile" column="mobile"/>
-		<result property="email" column="email"/>
-	</resultMap>
-	
-	
-	<select id="lecture_list" resultMap="lecture_list">
-		SELECT
-			l.idx, title, link_url, reg_date, l.use_at, l.campus_id, l.week, name
-				
-				<if test="active_ty != null and active_ty != '' and (active_ty == '1' or active_ty == 1) ">
-					and l.use_at = 'Y'
-				</if>
-				<if test="search_text != null and search_text != '' ">
-					and (
-						title  LIKE CONCAT('%', #{search_text}, '%') or
-						name  LIKE CONCAT('%', #{search_text}, '%')
-					) 
-				</if>
-			
-		FROM lecture_table l
-		where 1=1
-	  	
-		<if test="active_ty != null and active_ty != '' and (active_ty == '1' or active_ty == 1) ">
-			and l.use_at = 'Y'
+		<if test="searchWrd != null and searchWrd != ''">
+			<if test="searchCnd != null and searchCnd != '' and searchCnd =='ALL' ">
+				 and (
+					NTT_SJ LIKE CONCAT('%', #{searchWrd}, '%') or
+					NTT_CN LIKE CONCAT('%', #{searchWrd}, '%')
+				) 
+			</if>
+			<if test="searchCnd != null and searchCnd != '' and searchCnd =='NTT_SJ' ">
+				 and (
+					NTT_SJ LIKE CONCAT('%', #{searchWrd}, '%')
+				) 
+			</if>
+			<if test="searchCnd != null and searchCnd != '' and searchCnd =='NTT_CN' ">
+				 and (
+					NTT_CN LIKE CONCAT('%', #{searchWrd}, '%')
+				) 
+			</if>
 		</if>
 		
-		<if test="search_text != null and search_text != '' ">
-			and (
-				title  LIKE CONCAT('%', #{search_text}, '%') or
-				name  LIKE CONCAT('%', #{search_text}, '%')
-			) 
-		</if>
-
-		<if test="order_by != null and order_by != '' and order_by == 'title'">
-			order by title
-		</if>
-		<if test="order_by != null and order_by != '' and order_by == 'name'">
-			order by name
-		</if>
+		
+		order by 
+		(
+			case when NOTICE_AT = 'Y' then '0'
+		    when NOTICE_AT = '' or NOTICE_AT is null then '1'
+		    end
+		)
+		, FRST_REGIST_PNTTM desc 
+		LIMIT #{limit} OFFSET #{startNumber}
+	</select>
+	
+	<select id="notice_list_cnt" resultType="int">
+		select count(*)
+		from comtnbbs
+		
+		where BBS_ID = #{bbsId}
+		and USE_AT = 'Y'
 		
 	</select>
 	
-	<select id="lecture_select_one" resultMap="lecture_list">
-		SELECT
-			l.idx, title, name, link_url, reg_date, l.use_at, l.campus_id, l.week
-		FROM lecture_table l
-		where l.idx = #{idx}
+	<select id="notice_list_one" resultMap="boardDetail">
+		select NTT_ID, BBS_ID, NTT_SJ, NTT_CN, RDCNT, USE_AT, ANSWER_AT, ANSWER_LC,NTCR_ID, NTCR_NM, FRST_REGIST_PNTTM, ATCH_FILE_ID, NOTICE_AT
+		from comtnbbs
+		
+		where BBS_ID = #{bbsId}
+		and NTT_ID = #{nttId}
+
 	</select>
 	
-	
-	<insert id="lecture_insert" parameterType="pictVO">
-		INSERT INTO lecture_table
-			(
-			 title, link_url, reg_date, use_at, week, campus_id
-			)
-		VALUES (
-			 #{title}, #{link_url}, now(), 'N', #{week}, #{campus_id}
-			  )
-	</insert>
-	
-	<update id="lecture_update">
-		update lecture_table set
-			use_at = #{use_at}
-			<if test="in_date != null and in_date != ''">
-				,in_date = #{in_date}
-			</if>
-			<if test="out_date != null and out_date != ''">
-				,out_date =#{out_date}
-			</if>
-			<if test="title != null and title != ''">
-				,title = #{title}
-			</if>
-			<if test="link_url != null and link_url != ''">
-				,link_url = #{link_url}
-			</if>
-			<if test="campus_id != null and campus_id != ''">
-				,campus_id =#{campus_id}
-				
-			</if>
-			<if test="week != null and week != ''">
-				,week =#{week}
-			</if>
-			<if test="name != null and name != ''">
-				,name =#{name}
-			</if>
-			
-		where idx = #{idx}
-		
+	<update id="notice_rdcnt" parameterType="pictVO">
+		update comtnbbs
+		set rdcnt = ifnull(rdcnt, 0) + 1
+		where NTT_ID = #{nttId}
 	</update>
 	
-	<select id="lecture_attendance" resultMap="lecture_attendance">
-		select l.idx, l.title, l.name as professor, a.name, a.in_date, a.out_date, a.std_num, timestampdiff(MINUTE, a.in_date, a.out_date) as timediff,
-		(select count(std_num) from attendance_table at where at.std_num = a.std_num and at.lecture_id = #{idx}) as category_cnt,
-		(
-			select sum(timestampdiff(MINUTE, in_date, out_date)) from attendance_table tm 
-			where tm.lecture_id= #{idx}
-			and tm.std_num = a.std_num
-			group by std_num
-		) as whole_timediff
-		from lecture_table l    
-		join attendance_table a on a.lecture_id = l.idx
-		where l.idx = #{idx}
+	<select id="selectMemberView" resultType="memberVO">
+		SELECT
+			*
+		FROM
+			SPW_MEMBER
+		WHERE
+			MEMBER_ID = #{memberId}
 	</select>
 	
-	<select id="lecture_attendance_api" resultMap="lecture_attendance">
-		select l.idx, l.title, l.name as professor, a.name, a.in_date, a.out_date, a.std_num, timestampdiff(MINUTE, a.in_date, a.out_date) as timediff,
-		(select count(std_num) from attendance_table at where at.std_num = a.std_num and at.lecture_id = #{idx}) as category_cnt,
-		(
-			select sum(timestampdiff(MINUTE, in_date, out_date)) from attendance_table tm 
-			where tm.lecture_id= #{idx}
-			and tm.std_num = a.std_num
-			group by std_num
-		) as whole_timediff
-		from lecture_table l    
-		join attendance_table a on a.lecture_id = l.idx
-		where l.idx = #{idx}
+	<select id="selectMemberloginCheck" resultType="memberVO">
+		SELECT
+			a.*, (SELECT b.DEPARTMENT_NAME FROM SPW_DEPARTMENT b WHERE a.DEPARTMENT = b.DEPARTMENT_ID) AS DEPARTMENT_NAME 
+		FROM
+			SPW_MEMBER a
+		WHERE
+			a.MEMBER_ID = #{memberId}
+		AND
+			a.MEMBER_PW = #{memberPw}
+		AND
+			a.USE_FLAG = 'Y'
 	</select>
-	
-	
-	<select id="connection_user" resultMap="connection_user">
-		select id, nick_name, mobile, email
-		from user_table
-		where 1=1
-		<if test="search_text != null and search_text != '' ">
-			and (
-				id LIKE CONCAT('%', #{search_text}, '%') or
-				nick_name LIKE CONCAT('%', #{search_text}, '%') or
-				mobile LIKE CONCAT('%', #{search_text}, '%') or
-				email LIKE CONCAT('%', #{search_text}, '%')
-			) 
-		</if>
-	</select>
-	
-	
-	<delete id="connection_user_del" parameterType="pictVO">
-		 delete from user_table where id = #{id}
-	</delete>
-	
-	
-	<select id="board_list" resultType="pictVO">
-		select idx, title, text, date_format(reg_date, '%Y-%m-%d') as reg_date_for from board_master_edu
-		<if test="search_text != null and search_text != '' ">
-			where (
-				title LIKE CONCAT('%', #{search_text}, '%')
-			) 
-		</if>
-		order by reg_date desc
-	</select>
-	
-	<select id="board_list_one" resultType="pictVO">
-		select * from board_master_edu
-		where idx = #{idx}
-	</select>
-	
-	<insert id="board_insert" parameterType="pictVO">
-		INSERT INTO board_master_edu
-			(
-			 title, text, reg_date
-			)
-		VALUES (
-			 #{title}, #{text}, now()
-			  ) 
-	</insert>
-	
-	<update id="board_update" parameterType="pictVO">
-		update board_master_edu
-		set title =#{title}, text=#{text}, reg_date = now()
-		where idx = #{idx}
-	</update>
-	
-	<select id="lecture_userinfo_list" resultType="pictVO">
-		select * from user_info
-	</select>
-	
-	
-	<delete id="board_delete" parameterType="pictVO">
-		delete from board_master_edu where idx = #{idx}
-	</delete>
-	
-	
 	
 </mapper>
